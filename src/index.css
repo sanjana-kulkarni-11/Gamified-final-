@@ -1,0 +1,420 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .font-pixel {
+    font-family: 'Press Start 2P', monospace;
+  }
+  .font-silkscreen {
+    font-family: 'Silkscreen', monospace;
+  }
+  .font-vt323 {
+    font-family: 'VT323', monospace;
+  }
+  .image-pixelated {
+    image-rendering: pixelated;
+  }
+}
+
+/* Retro Pixel Background Grid */
+.bg-retro-grid {
+  background-color: #2b4ec9;
+  background-image: 
+    linear-gradient(to bottom, #1d4cd4 0%, #4b36b5 50%, #7d33b5 100%),
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 100% 100%, 36px 36px, 36px 36px;
+  background-blend-mode: normal, overlay, overlay;
+}
+
+/* Pixel Button shadows */
+.pixel-btn-shadow {
+  box-shadow: 0 5px 0 #111429, 0 6px 0 rgba(0, 0, 0, 0.4);
+}
+
+.pixel-btn-shadow:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 #111429;
+}
+
+.pixel-card-shadow {
+  box-shadow: 0 6px 0 rgba(10, 15, 30, 0.6), 0 0 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Minimal black landing page framed like the supplied laptop reference. */
+.reference-landing {
+  background: #000;
+}
+
+.reference-laptop {
+  position: relative;
+  z-index: 1;
+  width: min(80vw, calc(85vh * 1.5));
+  transform: translateY(-1.5vh);
+}
+
+.reference-screen-shell {
+  padding: clamp(5px, 1vw, 12px) clamp(6px, 1.3vw, 16px) 0;
+  border: 1px solid #9a9a9a;
+  border-bottom: 0;
+  border-radius: clamp(8px, 1.3vw, 18px) clamp(8px, 1.3vw, 18px) 0 0;
+  background: linear-gradient(135deg, #080808, #111 55%, #060606);
+  box-shadow: 0 0 0 1px #181818, 0 0 70px rgba(255, 255, 255, 0.025);
+}
+
+.reference-screen {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.5 / 1;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 27% 92%, rgba(101, 26, 121, .18), transparent 8%),
+    radial-gradient(ellipse at 77% 94%, rgba(154, 15, 37, .2), transparent 11%),
+    #020303;
+  color: #f6f6f6;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.reference-screen-topline {
+  position: absolute;
+  inset: 2.5% 2.3% auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 3;
+}
+
+.reference-brand,
+.reference-profile {
+  border: 0;
+  background: transparent;
+  color: #f3f3f3;
+  cursor: pointer;
+  font-size: clamp(6px, .7vw, 10px);
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+
+.reference-brand span {
+  color: #1db9aa;
+}
+
+.reference-profile span {
+  color: #ed4564;
+  margin-left: .45em;
+}
+
+.reference-grid {
+  position: absolute;
+  inset: 10% 2.5% 12%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.reference-step {
+  --step-accent: #20b9aa;
+  position: relative;
+  align-self: start;
+  min-width: 0;
+  min-height: 46%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding: 2% 7% 5%;
+  border: 0;
+  border-left: 1px solid rgba(235, 235, 235, .12);
+  color: #fff;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color .2s ease, transform .2s ease;
+}
+
+.reference-step:last-child {
+  border-right: 1px solid rgba(235, 235, 235, .12);
+}
+
+.reference-step-1 { margin-top: 16%; }
+.reference-step-2 { margin-top: 0; }
+.reference-step-3 { margin-top: 29%; }
+.reference-step-4 { margin-top: 17%; }
+
+.reference-step:hover,
+.reference-step:focus-visible {
+  z-index: 2;
+  background: rgba(255, 255, 255, .035);
+  outline: none;
+  transform: translateY(-3px);
+}
+
+.reference-step-number {
+  color: var(--step-accent);
+  font-size: clamp(18px, 3.5vw, 46px);
+  font-weight: 600;
+  line-height: .9;
+  letter-spacing: -.08em;
+}
+
+.reference-step-rule {
+  width: 18%;
+  min-width: 10px;
+  height: 2px;
+  margin: 6% 0 8%;
+  background: var(--step-accent);
+}
+
+.reference-step-title {
+  color: #f05470;
+  font-size: clamp(5px, .7vw, 10px);
+  line-height: 1.4;
+  letter-spacing: .05em;
+  font-weight: 700;
+}
+
+.reference-step-description {
+  max-width: 18em;
+  margin-top: 5%;
+  color: #d1d1d1;
+  font-size: clamp(5px, .58vw, 8px);
+  line-height: 1.5;
+}
+
+.reference-step-action {
+  display: flex;
+  align-items: center;
+  gap: .45em;
+  margin-top: 10%;
+  color: var(--step-accent);
+  font-size: clamp(4px, .5vw, 7px);
+  letter-spacing: .07em;
+  opacity: .82;
+}
+
+.reference-step-action > span {
+  margin-left: auto;
+  color: #fff;
+}
+
+.reference-screen-caption {
+  position: absolute;
+  inset: auto 2.5% 2.4%;
+  display: flex;
+  justify-content: space-between;
+  color: rgba(255, 255, 255, .48);
+  font-size: clamp(5px, .55vw, 8px);
+  letter-spacing: .16em;
+}
+
+.reference-cursor {
+  position: absolute;
+  right: 5%;
+  top: 49%;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 8px #fff;
+  pointer-events: none;
+}
+
+.reference-laptop-base {
+  position: relative;
+  width: 120%;
+  height: clamp(9px, 2.4vw, 24px);
+  margin-left: -10%;
+  border: 1px solid #aaa;
+  border-top: 2px solid #ddd;
+  border-radius: 0 0 20px 20px / 0 0 8px 8px;
+  background: linear-gradient(180deg, #f1f1f1 0%, #b9b9b9 32%, #777 70%, #d7d7d7 100%);
+  box-shadow: 0 2px 0 #464646, 0 8px 20px rgba(255, 255, 255, .08);
+}
+
+.reference-laptop-base span {
+  position: absolute;
+  left: 43%;
+  top: 0;
+  width: 14%;
+  height: 25%;
+  border-radius: 0 0 5px 5px;
+  background: linear-gradient(90deg, #858585, #eee, #777);
+}
+
+.reference-laptop-shadow {
+  width: 94%;
+  height: 10px;
+  margin: 3px auto 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .07);
+  filter: blur(7px);
+}
+
+/* One shared accent system across the dashboard, learning area, games and modals. */
+.ecorush-theme {
+  --eco-teal: #18b7a6;
+  --eco-teal-soft: #6de0d2;
+  --eco-teal-deep: #07302c;
+  --eco-red: #d94a63;
+  --eco-red-soft: #ff8292;
+  --eco-red-deep: #35151c;
+  --eco-surface: #080b0b;
+  --eco-border: #283331;
+  background-color: #020303;
+  color: #f3f5f4;
+}
+
+.ecorush-theme [class*="bg-emerald-"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-teal-"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-cyan-"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-blue-"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-indigo-"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-purple-"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-green-"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-sky-"]:not([class*="hover:bg-"]) {
+  background-color: var(--eco-teal) !important;
+}
+
+.ecorush-theme [class*="bg-amber-"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-yellow-"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-orange-"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-rose-"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-red-"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-pink-"]:not([class*="hover:bg-"]) {
+  background-color: var(--eco-red) !important;
+}
+
+.ecorush-theme [class*="bg-emerald-950"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-teal-950"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-cyan-950"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-blue-950"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-indigo-950"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-purple-950"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-green-950"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-amber-950"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-yellow-950"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-orange-950"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-rose-950"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-red-950"]:not([class*="hover:bg-"]),
+.ecorush-theme [class*="bg-pink-950"]:not([class*="hover:bg-"]) {
+  background-color: var(--eco-teal-deep) !important;
+}
+
+.ecorush-theme [class*="hover:bg-emerald-"]:hover,
+.ecorush-theme [class*="hover:bg-teal-"]:hover,
+.ecorush-theme [class*="hover:bg-cyan-"]:hover,
+.ecorush-theme [class*="hover:bg-blue-"]:hover,
+.ecorush-theme [class*="hover:bg-indigo-"]:hover,
+.ecorush-theme [class*="hover:bg-purple-"]:hover,
+.ecorush-theme [class*="hover:bg-green-"]:hover,
+.ecorush-theme [class*="hover:bg-sky-"]:hover {
+  background-color: var(--eco-teal) !important;
+}
+
+.ecorush-theme [class*="hover:bg-amber-"]:hover,
+.ecorush-theme [class*="hover:bg-yellow-"]:hover,
+.ecorush-theme [class*="hover:bg-orange-"]:hover,
+.ecorush-theme [class*="hover:bg-rose-"]:hover,
+.ecorush-theme [class*="hover:bg-red-"]:hover,
+.ecorush-theme [class*="hover:bg-pink-"]:hover {
+  background-color: var(--eco-red) !important;
+}
+
+.ecorush-theme [class*="bg-gradient-to-"] {
+  background-image: linear-gradient(110deg, var(--eco-teal), var(--eco-red)) !important;
+}
+
+/* Replace the old blue-slate surfaces with neutral black and charcoal. */
+.ecorush-theme [class*="bg-slate-950"] { background-color: #020303 !important; }
+.ecorush-theme [class*="bg-slate-900"] { background-color: #080a0a !important; }
+.ecorush-theme [class*="bg-slate-800"] { background-color: #101313 !important; }
+.ecorush-theme [class*="bg-slate-700"] { background-color: #191d1d !important; }
+.ecorush-theme [class*="bg-slate-600"] { background-color: #252a29 !important; }
+
+.ecorush-theme [class*="text-emerald-"],
+.ecorush-theme [class*="text-teal-"],
+.ecorush-theme [class*="text-cyan-"],
+.ecorush-theme [class*="text-blue-"],
+.ecorush-theme [class*="text-indigo-"],
+.ecorush-theme [class*="text-purple-"],
+.ecorush-theme [class*="text-green-"],
+.ecorush-theme [class*="text-sky-"] {
+  color: var(--eco-teal-soft) !important;
+}
+
+.ecorush-theme [class*="text-amber-"],
+.ecorush-theme [class*="text-yellow-"],
+.ecorush-theme [class*="text-orange-"],
+.ecorush-theme [class*="text-rose-"],
+.ecorush-theme [class*="text-red-"],
+.ecorush-theme [class*="text-pink-"] {
+  color: var(--eco-red-soft) !important;
+}
+
+.ecorush-theme [class*="border-emerald-"],
+.ecorush-theme [class*="border-teal-"],
+.ecorush-theme [class*="border-cyan-"],
+.ecorush-theme [class*="border-blue-"],
+.ecorush-theme [class*="border-indigo-"],
+.ecorush-theme [class*="border-purple-"],
+.ecorush-theme [class*="border-green-"],
+.ecorush-theme [class*="border-sky-"] {
+  border-color: color-mix(in srgb, var(--eco-teal) 58%, transparent) !important;
+}
+
+.ecorush-theme [class*="border-amber-"],
+.ecorush-theme [class*="border-yellow-"],
+.ecorush-theme [class*="border-orange-"],
+.ecorush-theme [class*="border-rose-"],
+.ecorush-theme [class*="border-red-"],
+.ecorush-theme [class*="border-pink-"] {
+  border-color: color-mix(in srgb, var(--eco-red) 58%, transparent) !important;
+}
+
+.ecorush-theme [class*="border-slate-"] { border-color: #303635 !important; }
+.ecorush-theme [class*="border-[#"] { border-color: #303635 !important; }
+
+.ecorush-theme [class*="ring-emerald-"],
+.ecorush-theme [class*="ring-teal-"],
+.ecorush-theme [class*="ring-cyan-"],
+.ecorush-theme [class*="ring-blue-"],
+.ecorush-theme [class*="ring-purple-"],
+.ecorush-theme [class*="ring-amber-"] {
+  --tw-ring-color: color-mix(in srgb, var(--eco-teal) 60%, transparent) !important;
+}
+
+.ecorush-theme [class*="bg-[#"] {
+  background-color: var(--eco-surface) !important;
+}
+
+@media (max-width: 540px) {
+  .reference-landing { padding-inline: 4vw; }
+  .reference-step { padding-inline: 6%; min-height: 40%; }
+  .reference-step-action svg { width: 8px; height: 8px; }
+  .reference-laptop { transform: translateY(-1vh); }
+}
+
+@keyframes pixelFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-pixel-float {
+  animation: pixelFloat 3.5s ease-in-out infinite;
+}
+
+@keyframes pixelTwinkle {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.75);
+  }
+}
+
+.animate-pixel-twinkle {
+  animation: pixelTwinkle 2.2s steps(2, start) infinite;
+}

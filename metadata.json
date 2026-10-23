@@ -1,0 +1,6 @@
+{
+  "name": "ECORUSH: Run for a Greener Future",
+  "description": "An original 3D endless runner game and environmental learning platform for students, featuring futuristic eco-cities, real-time power-ups, green computing challenges, and campus leaderboards.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
