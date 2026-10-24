@@ -26,6 +26,8 @@ jobs:
         run: bun install --no-save
       - name: Build site
         run: bun run build
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
