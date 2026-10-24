@@ -1,95 +1,44 @@
 import React from 'react';
-import { Award, BookOpen, Gamepad2, Play } from 'lucide-react';
-import { GameMode } from '../../types/game';
+import { BookOpen, Gamepad2 } from 'lucide-react';
+import { UserRole } from '../../types/game';
 
 interface ReferenceLandingProps {
-  onLaunchGame: (mode: GameMode) => void;
+  onLaunchGame: () => void;
   onNavigate: (tab: 'learn' | 'games' | 'achievements') => void;
   onOpenProfile: () => void;
+  role: UserRole;
+  nickname: string;
 }
 
-const steps = [
-  {
-    number: '1',
-    title: 'MOVE WITH PURPOSE',
-    description: 'Run the city. Learn how better code saves energy.',
-    action: 'START A SPRINT',
-    icon: Play,
-    accent: '#20b9aa',
-    run: (props: ReferenceLandingProps) => props.onLaunchGame('endless'),
-  },
-  {
-    number: '2',
-    title: 'LEARN THE SYSTEM',
-    description: 'Explore BCA concepts, one topic at a time.',
-    action: 'OPEN COURSES',
-    icon: BookOpen,
-    accent: '#20b9aa',
-    run: (props: ReferenceLandingProps) => props.onNavigate('learn'),
-  },
-  {
-    number: '3',
-    title: 'THINK IT THROUGH',
-    description: 'Take a quiz. Score 75% to unlock what comes next.',
-    action: 'PLAY & PRACTICE',
-    icon: Gamepad2,
-    accent: '#20b9aa',
-    run: (props: ReferenceLandingProps) => props.onNavigate('games'),
-  },
-  {
-    number: '4',
-    title: 'SEE YOUR IMPACT',
-    description: 'Build your streak and see how far you have come.',
-    action: 'VIEW PROGRESS',
-    icon: Award,
-    accent: '#20b9aa',
-    run: (props: ReferenceLandingProps) => props.onNavigate('achievements'),
-  },
-];
-
-export const ReferenceLanding: React.FC<ReferenceLandingProps> = (props) => (
-  <main className="reference-landing relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-black px-4 py-12 text-white sm:px-8">
-    <div className="reference-laptop w-full max-w-[1120px]">
-      <div className="reference-screen-shell">
-        <div className="reference-screen">
-          <div className="reference-screen-topline">
-            <button className="reference-brand" onClick={() => props.onLaunchGame('endless')} aria-label="Start EcoRush">
-              ECO<span>RUSH</span>
-            </button>
-            <button className="reference-profile" onClick={props.onOpenProfile}>
-              PROFILE <span>↗</span>
-            </button>
-          </div>
-
-          <div className="reference-grid" aria-label="EcoRush learning journey">
-            {steps.map((step, index) => {
-              const Icon = step.icon;
-              return (
-                <button
-                  className={`reference-step reference-step-${index + 1}`}
-                  key={step.number}
-                  onClick={() => step.run(props)}
-                  style={{ '--step-accent': step.accent } as React.CSSProperties}
-                >
-                  <span className="reference-step-number">{step.number}</span>
-                  <span className="reference-step-rule" />
-                  <span className="reference-step-title">{step.title}</span>
-                  <span className="reference-step-description">{step.description}</span>
-                  <span className="reference-step-action"><Icon size={12} />{step.action}<span>↗</span></span>
-                </button>
-              );
-            })}
-          </div>
-
-          <div className="reference-screen-caption">
-            <span>LEARN BY PLAYING</span>
-            <span>01 — 04</span>
-          </div>
-          <span className="reference-cursor" aria-hidden="true" />
+export const ReferenceLanding: React.FC<ReferenceLandingProps> = ({ onLaunchGame, onNavigate, onOpenProfile, role, nickname }) => (
+  <main className="flex min-h-screen w-full items-center justify-center overflow-y-auto bg-slate-950 px-4 py-10 text-white">
+    <section className="w-full max-w-4xl">
+      <header className="mb-10 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <div className="text-sm font-bold tracking-[0.3em] text-emerald-400">ECORUSH</div>
+          <h1 className="mt-2 text-3xl font-bold sm:text-4xl">What would you like to do?</h1>
+          <p className="mt-2 text-slate-400">Welcome, {nickname}. Pick up where you want to start.</p>
         </div>
+        <button onClick={onOpenProfile} className="rounded-xl border border-slate-700 px-4 py-2 text-sm text-slate-300 hover:border-emerald-500 hover:text-white">
+          {nickname} · {role}
+        </button>
+      </header>
+
+      <div className="grid gap-5 sm:grid-cols-2">
+        <button onClick={() => onNavigate('learn')} className="group rounded-3xl border border-cyan-500/30 bg-slate-900 p-7 text-left transition hover:-translate-y-1 hover:border-cyan-400 sm:p-9">
+          <span className="mb-8 flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-400/10 text-cyan-300"><BookOpen size={28} /></span>
+          <span className="block text-2xl font-bold">Study topics</span>
+          <span className="mt-2 block leading-relaxed text-slate-400">Browse your course topics, read notes, and practice what you learn.</span>
+          <span className="mt-7 inline-block text-sm font-semibold text-cyan-300">Open study topics →</span>
+        </button>
+
+        <button onClick={onLaunchGame} className="group rounded-3xl border border-emerald-500/30 bg-slate-900 p-7 text-left transition hover:-translate-y-1 hover:border-emerald-400 sm:p-9">
+          <span className="mb-8 flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-400/10 text-emerald-300"><Gamepad2 size={28} /></span>
+          <span className="block text-2xl font-bold">Play games</span>
+          <span className="mt-2 block leading-relaxed text-slate-400">Choose a learning game or jump into the 3D Eco-Runner.</span>
+          <span className="mt-7 inline-block text-sm font-semibold text-emerald-300">View games →</span>
+        </button>
       </div>
-      <div className="reference-laptop-base"><span /></div>
-      <div className="reference-laptop-shadow" />
-    </div>
+    </section>
   </main>
 );

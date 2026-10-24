@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { GameMode, CharacterConfig, CharacterSkin, StudentProgress, PowerUpActiveState, RunSummary, QuizQuestion, LearningModule } from './types/game';
 import { INITIAL_CHARACTERS, INITIAL_SKINS, INITIAL_MISSIONS } from './data/initialData';
 import { storageService } from './services/storageService';
@@ -31,11 +31,12 @@ import { TopicNotesModal } from './components/platform/TopicNotesModal';
 import { LoginModal } from './components/platform/LoginModal';
 import { ReferenceLanding } from './components/platform/ReferenceLanding';
 
-import { Play, BookOpen, Trophy, ShoppingBag, Award, Users, ShieldAlert, Settings, Volume2, VolumeX, Coins, Zap, Map, Gamepad2, Dice5, Flame, Upload, UserRound } from 'lucide-react';
+import { Play, BookOpen, Trophy, ShoppingBag, Award, Users, ShieldAlert, Settings, Volume2, VolumeX, Coins, Zap, Map, Gamepad2, Dice5, Flame, Upload, UserRound, LogOut } from 'lucide-react';
 
 export default function App() {
   const [progress, setProgress] = useState<StudentProgress>(storageService.getProgress());
-  const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => storageService.isUserLoggedIn());
+  const [showLoginModal, setShowLoginModal] = useState<boolean>(() => !storageService.isUserLoggedIn());
   const [showReferenceLanding, setShowReferenceLanding] = useState<boolean>(true);
   const [currentTab, setCurrentTab] = useState<'hub' | 'games' | 'learn' | 'leaderboard' | 'shop' | 'achievements' | 'teacher' | 'admin'>('hub');
   const [hubView, setHubView] = useState<'campaign' | 'arcade'>('campaign');
@@ -97,6 +98,15 @@ export default function App() {
     setIsMuted(nextMuted);
   };
 
+  const handleLogout = () => {
+    storageService.logoutUser();
+    setIsLoggedIn(false);
+    setShowReferenceLanding(true);
+    setCurrentTab('hub');
+    setGameState('menu');
+    setShowLoginModal(true);
+  };
+
   // Start game flow with 3-2-1 countdown
   const handleStartGame = (mode: GameMode, topicContext?: { topicTitle: string; moduleId?: string; questions?: QuizQuestion[] }) => {
     if (topicContext) {
@@ -121,12 +131,6 @@ export default function App() {
         setGameState('playing');
       }
     }, 800);
-  };
-
-  const handleLandingGame = (mode: GameMode) => {
-    setShowReferenceLanding(false);
-    setCurrentTab('hub');
-    handleStartGame(mode);
   };
 
   const handleLandingNavigation = (tab: 'learn' | 'games' | 'achievements') => {
@@ -389,6 +393,15 @@ export default function App() {
               <span className="hidden sm:inline max-w-28 truncate">{progress.nickname}</span>
             </button>
 
+            <button
+              onClick={handleLogout}
+              className="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 hover:text-rose-300 hover:border-rose-500/50 flex items-center justify-center transition-colors"
+              title="Sign out"
+              aria-label="Sign out"
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
+
             {/* Token Pill */}
             <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/90 border border-amber-500/30 text-amber-300 text-xs font-mono font-bold">
               <Coins className="w-3.5 h-3.5" />
@@ -419,9 +432,11 @@ export default function App() {
       {/* Main Content Viewport */}
       {gameState === 'menu' && showReferenceLanding ? (
         <ReferenceLanding
-          onLaunchGame={handleLandingGame}
+          onLaunchGame={() => handleLandingNavigation('games')}
           onNavigate={handleLandingNavigation}
           onOpenProfile={() => setShowLoginModal(true)}
+          role={progress.role}
+          nickname={progress.nickname}
         />
       ) : (
       <main className="flex-1 relative overflow-hidden flex flex-col">
@@ -638,8 +653,8 @@ export default function App() {
             {currentTab === 'leaderboard' && <LeaderboardView />}
             {currentTab === 'shop' && <ShopView progress={progress} onUpdateProgress={setProgress} />}
             {currentTab === 'achievements' && <AchievementsView progress={progress} onUpdateProgress={setProgress} />}
-            {currentTab === 'teacher' && <TeacherDashboard />}
-            {currentTab === 'admin' && <AdminModuleBuilder />}
+            {currentTab === 'teacher' && (progress.role === 'teacher' || progress.role === 'admin') && <TeacherDashboard />}
+            {currentTab === 'admin' && progress.role === 'admin' && <AdminModuleBuilder />}
           </div>
         ) : (
           /* Active Gameplay Viewport */
@@ -740,9 +755,12 @@ export default function App() {
       {showLoginModal && (
         <LoginModal
           currentProgress={progress}
+          canClose={isLoggedIn}
           onClose={() => setShowLoginModal(false)}
           onLoginSuccess={(updated) => {
             setProgress(updated);
+            setIsLoggedIn(true);
+            setShowReferenceLanding(true);
             setCurrentTab('hub');
             setHubView('campaign');
             setShowLoginModal(false);

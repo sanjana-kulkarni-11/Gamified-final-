@@ -5,6 +5,8 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
+    // Serve the project from its repository path when publishing to GitHub Pages.
+    base: process.env.GITHUB_ACTIONS === 'true' ? '/Gamified-final-/' : '/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {

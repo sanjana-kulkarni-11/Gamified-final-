@@ -17,6 +17,7 @@ import {
 
 interface LoginModalProps {
   currentProgress: StudentProgress;
+  canClose?: boolean;
   onClose: () => void;
   onLoginSuccess: (updated: StudentProgress) => void;
 }
@@ -58,6 +59,7 @@ const DEMO_ACCOUNTS = [
 
 export const LoginModal: React.FC<LoginModalProps> = ({
   currentProgress,
+  canClose = true,
   onClose,
   onLoginSuccess,
 }) => {
@@ -139,12 +141,12 @@ export const LoginModal: React.FC<LoginModalProps> = ({
             </div>
           </div>
 
-          <button
+          {canClose && <button
             onClick={onClose}
             className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white border border-slate-700 transition-colors"
           >
             <X className="w-5 h-5" />
-          </button>
+          </button>}
         </div>
 
         {/* Tab Switcher */}
@@ -285,13 +287,13 @@ export const LoginModal: React.FC<LoginModalProps> = ({
 
           {/* Action Buttons */}
           <div className="pt-2 flex items-center justify-between gap-3">
-            <button
+            {canClose && <button
               type="button"
               onClick={onClose}
               className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-pixel text-xs border border-slate-700 transition-colors"
             >
               Cancel
-            </button>
+            </button>}
 
             <button
               type="submit"
